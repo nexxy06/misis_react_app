@@ -1,16 +1,27 @@
-// Registration.js
-import React, { useState } from 'react';
+// src/components/Registration.js
+import React, { useState, useContext } from 'react';
+import { FrogContext } from '../context/FrogContext';
 import './Registration.css';
 
 function Registration() {
+  // Получаем функцию добавления лягушки из контекста
+  const { addFrog } = useContext(FrogContext);
+
+  // Состояние для данных формы
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     photoDescription: '',
   });
-  const [photo, setPhoto] = useState(null);
 
+  // Состояние для загружаемого фото
+  const [photo, setPhoto] = useState(null);
+  
+  // Состояние для превью фото
+  const [photoPreview, setPhotoPreview] = useState(null);
+
+  // Обработчик изменения текстовых полей
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -19,51 +30,70 @@ function Registration() {
     }));
   };
 
+  // Обработчик выбора файла
   const handlePhotoChange = (e) => {
-    setPhoto(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file) {
+      setPhoto(file);
+      // Создаем временный URL для превью
+      setPhotoPreview(URL.createObjectURL(file));
+    }
   };
 
+  // Обработчик отправки формы
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const data = new FormData();
-    data.append('name', formData.name);
-    data.append('email', formData.email);
-    data.append('phone', formData.phone);
-    data.append('photoDescription', formData.photoDescription);
-    if (photo) {
-      data.append('photo', photo);
-    }
+    // 1. Сначала добавляем карточку с локальными данными
+    const newFrog = {
+      name: formData.name || 'Безымянная лягушка',
+      description: formData.photoDescription || 'Нет описания',
+      image: photoPreview || '/images/default-frog.png' // временный или дефолтный URL
+    };
+    addFrog(newFrog);
 
+    // 2. Отправляем данные на сервер (если нужно)
     try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('photoDescription', formData.photoDescription);
+      if (photo) {
+        formDataToSend.append('photo', photo);
+      }
+
       const response = await fetch('http://localhost:5000/upload', {
         method: 'POST',
-        body: data,
+        body: formDataToSend,
       });
 
-      if (response.ok) {
-        alert('Данные успешно отправлены!');
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          photoDescription: '',
-        });
-        setPhoto(null);
-      } else {
-        alert('Ошибка при отправке данных');
+      if (!response.ok) {
+        console.error('Ошибка при отправке на сервер');
       }
     } catch (error) {
-      console.error('Error:', error);
-      alert('Ошибка сети');
+      console.error('Ошибка сети:', error);
     }
+
+    // 3. Очищаем форму после отправки
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      photoDescription: '',
+    });
+    setPhoto(null);
+    setPhotoPreview(null);
+    
+    // Можно добавить уведомление об успехе
+    alert('Карточка лягушки добавлена!');
   };
 
   return (
     <section id="registration">
       <h2>Обратная связь</h2>
       <form onSubmit={handleSubmit}>
+        {/* Поле для имени */}
         <label htmlFor="name">Имя:</label>
         <input
           type="text"
@@ -74,6 +104,7 @@ function Registration() {
           required
         />
         
+        {/* Поле для email */}
         <label htmlFor="email">Email:</label>
         <input
           type="email"
@@ -84,6 +115,7 @@ function Registration() {
           required
         />
         
+        {/* Поле для телефона */}
         <label htmlFor="phone">Телефон:</label>
         <input
           type="tel"
@@ -93,25 +125,45 @@ function Registration() {
           onChange={handleChange}
         />
 
-        <label htmlFor="photo">Фото:</label>
+        {/* Поле для загрузки фото */}
+        <label htmlFor="photo">Фото лягушки:</label>
         <input
           type="file"
           id="photo"
           name="photo"
           accept="image/*"
           onChange={handlePhotoChange}
+          required
         />
 
-        <label htmlFor="photoDescription">Описание фото:</label>
+        {/* Превью загруженного фото */}
+        {photoPreview && (
+          <div className="photo-preview">
+            <img 
+              src={photoPreview} 
+              alt="Предпросмотр" 
+              style={{ 
+                maxWidth: '200px', 
+                margin: '10px 0',
+                borderRadius: '4px'
+              }} 
+            />
+          </div>
+        )}
+
+        {/* Поле для описания фото */}
+        <label htmlFor="photoDescription">Описание лягушки:</label>
         <textarea
           id="photoDescription"
           name="photoDescription"
           value={formData.photoDescription}
           onChange={handleChange}
           rows="4"
+          required
         />
 
-        <button type="submit">Отправить</button>
+        {/* Кнопка отправки */}
+        <button type="submit">Добавить лягушку</button>
       </form>
     </section>
   );

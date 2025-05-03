@@ -1,26 +1,29 @@
 // App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Home from './components/Home';
+import About from './components/About';
 import Images from './components/Images';
 import Table from './components/Table';
 import Registration from './components/Registration';
+import { FrogProvider } from './context/FrogContext';
 
 function App() {
   return (
-    <Router>
-      <div>
-        <Header />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/images" element={<Images />} />
-            <Route path="/table" element={<Table />} />
-            <Route path="/registration" element={<Registration />} />
-          </Routes>
-        </main>
-      </div>
-    </Router>
+    <FrogProvider>
+      <Router>
+        <div>
+          <Header />
+          <main>
+            <Routes>
+              <Route path="/" element={<About />} />
+              <Route path="/images" element={<Images />} />
+              <Route path="/table" element={<Table />} />
+              <Route path="/registration" element={<Registration />} />
+            </Routes>
+          </main>
+        </div>
+      </Router>
+    </FrogProvider>
   );
 }
 
