@@ -1,52 +1,37 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import os
-from werkzeug.utils import secure_filename
-import uuid
 
 app = Flask(__name__)
+CORS(app)  # Разрешить все CORS-запросы
+
 app.config['UPLOAD_FOLDER'] = 'uploads'
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max
-
-# Словарь для хранения данных
-feedback_data = {}
-
-# Создаем папку для загрузок, если ее нет
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-@app.route('/api/feedback', methods=['POST'])
-def handle_feedback():
-    if 'image' not in request.files:
-        return jsonify({'error': 'No image file'}), 400
-    
-    file = request.files['image']
+@app.route('/api/upload', methods=['POST', 'OPTIONS'])
+def upload_file():
+    if request.method == 'OPTIONS':
+        return jsonify({}), 200
+
+    if 'photo' not in request.files:
+        return jsonify({"error": "Фото не загружено"}), 400
+
+    file = request.files['photo']
     if file.filename == '':
-        return jsonify({'error': 'No selected file'}), 400
-    
-    if file:
-        # Генерируем уникальное имя файла
-        filename = secure_filename(file.filename)
-        unique_filename = f"{uuid.uuid4().hex}_{filename}"
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
-        file.save(filepath)
-        
-        # Генерируем номер карточки
-        card_number = len(feedback_data) + 1
-        
-        # Сохраняем данные
-        feedback_data[card_number] = {
-            'image_filename': unique_filename,
-            'caption': request.form.get('caption', ''),
-            'sender_name': request.form.get('name', ''),
-            'email': request.form.get('email', ''),
-            'phone': request.form.get('phone', '')
+        return jsonify({"error": "Файл не выбран"}), 400
+
+    filename = file.filename
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+    return jsonify({
+        "message": "Файл загружен!",
+        "data": {
+            "name": request.form.get('name'),
+            "email": request.form.get('email'),
+            "photo": filename
         }
-        
-        return jsonify({
-            'card_number': card_number,
-            'message': 'Feedback received successfully'
-        })
-    
-    return jsonify({'error': 'File upload failed'}), 500
+    }), 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
