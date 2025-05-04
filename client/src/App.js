@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+// App.js
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import About from './components/About';
+import Images from './components/Images';
+import Table from './components/Table';
+import Registration from './components/Registration';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Router>
+        <div>
+          <Header />
+          <main>
+            <Routes>
+              <Route path="/" element={<About />} />
+              <Route path="/images" element={<Images />} />
+              <Route path="/table" element={<Table />} />
+              <Route path="/registration" element={<Registration />} />
+            </Routes>
+          </main>
+        </div>
+      </Router>
+  );
+}
+
+function Header() {
+  return (
+    <header>
+      <h1>Фото лягушек</h1>
+      <nav>
+        <ul>
+          <li><Link to="/">О лягушках</Link></li>
+          <li><Link to="/images">Фото</Link></li>
+          <li><Link to="/table">Таблица</Link></li>
+          <li><Link to="/registration">Обратная связь</Link></li>
+        </ul>
+      </nav>
+    </header>
   );
 }
 
