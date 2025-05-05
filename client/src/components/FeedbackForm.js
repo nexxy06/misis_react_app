@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './FeedbackForm.css';
 
 const FeedbackForm = () => {
   const [formData, setFormData] = useState({
@@ -56,16 +57,18 @@ const FeedbackForm = () => {
   };
 
   return (
-    <div style={{ padding: '20px', maxWidth: '500px', margin: '0 auto' }}>
+    <section id="registration">
+    <div>
       <h2>Обратная связь</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {message && <p style={{ color: 'green' }}>{message}</p>}
 
       <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '10px' }}>
+        <div>
           <label>Имя:</label>
           <input
             type="text"
+            id="name"
             name="name"
             value={formData.name}
             onChange={handleChange}
@@ -73,10 +76,11 @@ const FeedbackForm = () => {
           />
         </div>
 
-        <div style={{ marginBottom: '10px' }}>
+        <div>
           <label>Email:</label>
           <input
             type="email"
+            id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
@@ -84,10 +88,11 @@ const FeedbackForm = () => {
           />
         </div>
 
-        <div style={{ marginBottom: '10px' }}>
+        <div>
           <label>Телефон:</label>
           <input
             type="tel"
+            id="phone"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
@@ -95,7 +100,7 @@ const FeedbackForm = () => {
           />
         </div>
 
-        <div style={{ marginBottom: '10px' }}>
+        <div>
           <label>Фото лягушки:</label>
           <input
             type="file"
@@ -106,7 +111,7 @@ const FeedbackForm = () => {
           />
         </div>
 
-        <div style={{ marginBottom: '10px' }}>
+        <div>
           <label>Подпись к фото:</label>
           <textarea
             name="caption"
@@ -116,9 +121,10 @@ const FeedbackForm = () => {
           />
         </div>
 
-        <button type="submit">Отправить</button>
+        <button type="submit">Отправить</button> 
       </form>
     </div>
+    </section>
   );
 };
 
