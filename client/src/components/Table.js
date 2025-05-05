@@ -36,9 +36,10 @@ const Table = () => {
           <div key={frog.id} className="frog-card">
             <img 
               src={`http://localhost:5000${frog.image}`} 
-              alt={frog.title} 
+              alt={frog.title}
               onError={(e) => {
-                e.target.src = '/placeholder-frog.png';
+                e.target.src = '/placeholder-frog.jpg';
+                e.target.onerror = null;
               }}
             />
             <h3>{frog.title}</h3>

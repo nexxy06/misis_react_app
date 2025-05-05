@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import os
 from pathlib import Path
@@ -8,7 +8,7 @@ CORS(app)
 
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+# os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 def get_next_image_number():
     """Получает следующий номер для изображения"""
@@ -54,6 +54,36 @@ def upload_file():
             "photo": filename
         }
     }), 200
+
+frogs_data = [
+    {
+        "id": 1,
+        "image": "/static/images/1image.jpg",
+        "title": "Лягушка 1",
+        "description": "Краткое описание лягушки 1. Обитает в тропических лесах."
+    },
+    {
+        "id": 2,
+        "image": "/static/images/small-image1.png",
+        "title": "Лягушка 2",
+        "description": "Краткое описание лягушки 2. Ядовитый вид."
+    },
+    {
+        "id": 3,
+        "image": "/static/images/small-image1.png",
+        "title": "Лягушка 3",
+        "description": "Краткое описание лягушки 3. Древолаз."
+    }
+]
+
+@app.route('/api/frogs', methods=['GET'])
+def get_frogs():
+    return jsonify(frogs_data)
+
+@app.route('/static/images/<filename>')
+def serve_image(filename):
+    print("", filename)
+    return send_from_directory('../uploads/', filename)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
