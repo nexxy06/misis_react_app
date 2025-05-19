@@ -4,12 +4,10 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import About from './components/About';
 import Images from './components/Images';
 import Table from './components/Table';
-import Registration from './components/Registration';
-import { FrogProvider } from './context/FrogContext';
+import Registration from './components/FeedbackForm';
 
 function App() {
   return (
-    <FrogProvider>
       <Router>
         <div>
           <Header />
@@ -23,7 +21,6 @@ function App() {
           </main>
         </div>
       </Router>
-    </FrogProvider>
   );
 }
 
