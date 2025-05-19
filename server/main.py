@@ -38,7 +38,7 @@ def load_frogs_data():
         ]
 
 def save_frogs_data(data):
-    """Сохраняет данные о лягушках в JSON-файл"""
+    """Сохраняет данные в JSON-файл"""
     with open(app.config['DATA_FILE'], 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
