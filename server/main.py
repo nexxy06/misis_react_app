@@ -88,6 +88,13 @@ def upload_file():
 def get_frogs():
     return jsonify(frogs_data)
 
+@app.route('/api/frogs/<int:frog_id>', methods=['GET'])
+def get_frog(frog_id):
+    frog = next((f for f in frogs_data if f['id'] == frog_id), None)
+    if frog:
+        return jsonify(frog)
+    return jsonify({"error": "Лягушка не найдена"}), 404
+
 @app.route('/static/images/<filename>')
 def serve_image(filename):
     print("", filename)

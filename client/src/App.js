@@ -2,7 +2,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import About from './components/About';
-import Images from './components/Images';
+import Details from './components/Details';
 import Table from './components/Table';
 import Registration from './components/FeedbackForm';
 
@@ -14,8 +14,8 @@ function App() {
           <main>
             <Routes>
               <Route path="/" element={<About />} />
-              <Route path="/images" element={<Images />} />
               <Route path="/table" element={<Table />} />
+              <Route path="/frogs/:id" element={<Details />} />
               <Route path="/registration" element={<Registration />} />
             </Routes>
           </main>
@@ -31,7 +31,7 @@ function Header() {
       <nav>
         <ul>
           <li><Link to="/">О лягушках</Link></li>
-          <li><Link to="/images">Фото</Link></li>
+          <li><Link to="/frogs/:id">Фото</Link></li>
           <li><Link to="/table">Таблица</Link></li>
           <li><Link to="/registration">Обратная связь</Link></li>
         </ul>

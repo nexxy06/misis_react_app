@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Table.css';
 
 const Table = () => {
   const [frogs, setFrogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchFrogs = async () => {
@@ -30,10 +32,15 @@ const Table = () => {
 
   return (
     <div className="frog-gallery">
-      <h1>Список лягушек</h1>
+      <h2>Список лягушек</h2>
       <div className="frog-grid">
         {frogs.map(frog => (
-          <div key={frog.id} className="frog-card">
+          <div 
+            key={frog.id} 
+            className="frog-card"
+            onClick={() => navigate(`/frogs/${frog.id}`)}
+            style={{ cursor: 'pointer' }}
+          >
             <img 
               src={`http://localhost:5000${frog.image}`} 
               alt={frog.title}
