@@ -28,6 +28,21 @@ def get_next_image_number():
     
     return max(numbers) + 1 if numbers else 1
 
+frogs_data = [
+    {
+        "id": 1,
+        "image": "/static/images/1image.jpg",
+        "title": "Лягушка 1",
+        "description": "Краткое описание лягушки 1. Обитает в тропических лесах."
+    },
+    {
+        "id": 2,
+        "image": "/static/images/2image.jpg",
+        "title": "Лягушка 2",
+        "description": "Краткое описание лягушки 2. Ядовитый вид."
+    },
+]
+
 @app.route('/api/upload', methods=['POST', 'OPTIONS'])
 def upload_file():
     if request.method == 'OPTIONS':
@@ -43,6 +58,18 @@ def upload_file():
     next_num = get_next_image_number()
     file_ext = os.path.splitext(file.filename)[1]
     filename = f"{next_num}image{file_ext}"
+    image_path = f"/static/images/{filename}"
+
+    # Добавить запись в frogs_data
+    new_frog = {
+        "id": len(frogs_data) + 1,
+        "image": image_path,
+        "title": request.form.get('name', f"Лягушка {len(frogs_data) + 1}"),
+        "description": request.form.get('description', 'Описание отсутствует')
+    }
+    
+    frogs_data.append(new_frog)
+
 
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
@@ -51,30 +78,11 @@ def upload_file():
         "data": {
             "name": request.form.get('name'),
             "email": request.form.get('email'),
-            "photo": filename
+            "photo": filename,
+            "description": request.form.get('description')
         }
     }), 200
 
-frogs_data = [
-    {
-        "id": 1,
-        "image": "/static/images/1image.jpg",
-        "title": "Лягушка 1",
-        "description": "Краткое описание лягушки 1. Обитает в тропических лесах."
-    },
-    {
-        "id": 2,
-        "image": "/static/images/small-image1.png",
-        "title": "Лягушка 2",
-        "description": "Краткое описание лягушки 2. Ядовитый вид."
-    },
-    {
-        "id": 3,
-        "image": "/static/images/small-image1.png",
-        "title": "Лягушка 3",
-        "description": "Краткое описание лягушки 3. Древолаз."
-    }
-]
 
 @app.route('/api/frogs', methods=['GET'])
 def get_frogs():

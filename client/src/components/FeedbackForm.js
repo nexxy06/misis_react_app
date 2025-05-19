@@ -6,7 +6,7 @@ const FeedbackForm = () => {
     name: '',
     email: '',
     phone: '',
-    caption: '',
+    description: '',
     photo: null,
   });
   const [message, setMessage] = useState('');
@@ -36,7 +36,7 @@ const FeedbackForm = () => {
     data.append('name', formData.name);
     data.append('email', formData.email);
     data.append('phone', formData.phone);
-    data.append('caption', formData.caption);
+    data.append('description', formData.description);
     data.append('photo', formData.photo);
 
     try {
@@ -114,8 +114,8 @@ const FeedbackForm = () => {
         <div>
           <label>Подпись к фото:</label>
           <textarea
-            name="caption"
-            value={formData.caption}
+            name="description"
+            value={formData.description}
             onChange={handleChange}
             required
           />
