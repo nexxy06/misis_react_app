@@ -65,7 +65,7 @@ const FeedbackForm = () => {
 
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Имя:</label>
+          <label>Имя: </label>
           <input
             type="text"
             id="name"
@@ -77,7 +77,7 @@ const FeedbackForm = () => {
         </div>
 
         <div>
-          <label>Email:</label>
+          <label>Email: </label>
           <input
             type="email"
             id="email"
@@ -89,7 +89,7 @@ const FeedbackForm = () => {
         </div>
 
         <div>
-          <label>Телефон:</label>
+          <label>Телефон: </label>
           <input
             type="tel"
             id="phone"
@@ -101,7 +101,7 @@ const FeedbackForm = () => {
         </div>
 
         <div>
-          <label>Фото лягушки:</label>
+          <label>Фото лягушки: </label>
           <input
             type="file"
             name="photo"
@@ -112,7 +112,7 @@ const FeedbackForm = () => {
         </div>
 
         <div>
-          <label>Подпись к фото:</label>
+          <label>Подпись к фото: </label>
           <textarea
             name="description"
             value={formData.description}
