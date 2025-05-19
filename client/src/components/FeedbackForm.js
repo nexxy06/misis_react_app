@@ -49,7 +49,7 @@ const FeedbackForm = () => {
         throw new Error('Ошибка сервера');
       }
 
-      const result = await response.json();
+      // const result = await response.json();
       setMessage(`Данные отправлены!`); // Файл: ${result.data.photo_filename}
     } catch (err) {
       setError(`Ошибка: ${err.message}`);
