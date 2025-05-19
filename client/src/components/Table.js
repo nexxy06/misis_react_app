@@ -30,7 +30,7 @@ const Table = () => {
 
   return (
     <div className="frog-gallery">
-      <h1>Список лягушек</h1>
+      <h2>Список лягушек</h2>
       <div className="frog-grid">
         {frogs.map(frog => (
           <div key={frog.id} className="frog-card">
