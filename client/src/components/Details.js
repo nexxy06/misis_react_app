@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import './Details.css';
 
 const FrogDetail = () => {
   const { id } = useParams();
@@ -30,10 +31,21 @@ const FrogDetail = () => {
   if (loading) return <div className="loading">Загрузка...</div>;
   if (error) return <div className="error">Ошибка: {error}</div>;
 
+  // Функция для безопасного отображения HTML
+  const createMarkup = (html) => {
+    return { __html: html };
+  };
+
   return (
     <div className="frog-detail">
-      <button onClick={() => navigate(-1)}>Назад</button>
+      <button 
+        onClick={() => navigate(-1)}
+      >
+        Назад
+      </button>
+      
       <h1>{frog.title}</h1>
+      
       <img 
         src={`http://localhost:5000${frog.image}`} 
         alt={frog.title}
@@ -42,7 +54,11 @@ const FrogDetail = () => {
           e.target.onerror = null;
         }}
       />
-      <p>{frog.description}</p>
+      
+      <div 
+        className="frog-description"
+        dangerouslySetInnerHTML={createMarkup(frog.description)}
+      />
     </div>
   );
 };
