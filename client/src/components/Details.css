@@ -43,8 +43,23 @@
   margin: 10px 0;
 }
 
+/* жирный текст */
+.frog-description strong,
+.frog-description b {
+  font-weight: bold;
+  color: #000000;
+}
+
+/* подчёркнутый текст */
+.frog-description u,
+.frog-description ins {
+  text-decoration: underline;
+  text-decoration-color: #218526;
+  text-decoration-thickness: 2px;
+}
+
 .frog-description a {
-  color: #4CAF50;
+  color: #218526;
   text-decoration: none;
 }
 
