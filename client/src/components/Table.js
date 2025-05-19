@@ -4,6 +4,8 @@ import './Table.css';
 
 const Table = () => {
   const [frogs, setFrogs] = useState([]);
+  const [filteredFrogs, setFilteredFrogs] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -17,6 +19,7 @@ const Table = () => {
         }
         const data = await response.json();
         setFrogs(data);
+        setFilteredFrogs(data); // Инициализируем отфильтрованный список
       } catch (err) {
         setError(err.message);
       } finally {
@@ -27,14 +30,40 @@ const Table = () => {
     fetchFrogs();
   }, []);
 
+  useEffect(() => {
+    if (searchTerm.trim() === '') {
+      setFilteredFrogs(frogs);
+    } else {
+      const filtered = frogs.filter(frog => 
+        frog.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredFrogs(filtered);
+    }
+  }, [searchTerm, frogs]);
+
   if (loading) return <div className="loading">Загрузка...</div>;
   if (error) return <div className="error">Ошибка: {error}</div>;
 
   return (
     <div className="frog-gallery">
       <h2>Список статей</h2>
+      
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Поиск по названию..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+        />
+      </div>
+      
+      {filteredFrogs.length === 0 && searchTerm.trim() !== '' && (
+        <div className="no-results">Ничего не найдено по запросу "{searchTerm}"</div>
+      )}
+      
       <div className="frog-grid">
-        {frogs.map(frog => (
+        {filteredFrogs.map(frog => (
           <div 
             key={frog.id} 
             className="frog-card"
