@@ -10,8 +10,8 @@
 
 #registration h2 {
     color: #298936;
-    margin-top: 5px;  /* Увеличиваем отступ сверху */
-    margin-bottom: 30px;  /* Увеличиваем отступ снизу */
+    margin-top: 5px;
+    margin-bottom: 30px;
 }
 
 form {

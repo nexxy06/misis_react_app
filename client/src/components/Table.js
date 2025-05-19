@@ -19,7 +19,7 @@ const Table = () => {
         }
         const data = await response.json();
         setFrogs(data);
-        setFilteredFrogs(data); // Инициализируем отфильтрованный список
+        setFilteredFrogs(data); // отфильтрованный список
       } catch (err) {
         setError(err.message);
       } finally {

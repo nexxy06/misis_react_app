@@ -19,7 +19,7 @@ def load_frogs_data():
         with open(app.config['DATA_FILE'], 'r', encoding='utf-8') as f:
             return json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
-        # Возвращаем начальные данные, если файла нет или он поврежден
+        # Возвращает начальные данные, если файла нет или он поврежден
         return [
             {
                 "id": 1,
@@ -80,7 +80,7 @@ def upload_file():
     filename = f"{next_num}image{file_ext}"
     image_path = f"/static/images/{filename}"
 
-    # Создаем запись
+    # Добавляем запись
     new_frog = {
         "id": len(frogs_data) + 1,
         "image": image_path,
@@ -116,7 +116,7 @@ def serve_image(filename):
     return send_from_directory('../uploads/', filename)
 
 if __name__ == '__main__':
-    # Инициализация файла данных при первом запуске
+    # Инициализация файла с данными при первом запуске
     if not os.path.exists(app.config['DATA_FILE']):
         save_frogs_data(load_frogs_data())
     app.run(debug=True, port=5000)

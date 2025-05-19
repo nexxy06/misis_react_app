@@ -72,7 +72,7 @@ nav a {
   width: auto;
   height: auto;
   object-fit: contain; /* Сохраняет пропорции, не обрезает */
-  display: block;    /* Убирает лишние отступы */
-  margin: 0 auto;    /* Центрирует изображение */
+  display: block;
+  margin: 0 auto;
   border-radius: 5px;
 }
