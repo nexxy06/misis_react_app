@@ -50,7 +50,7 @@ const Table = () => {
               }}
             />
             <h3>{frog.title}</h3>
-            <p>{frog.email}</p>
+            <p>{frog.habitat}</p>
           </div>
         ))}
       </div>

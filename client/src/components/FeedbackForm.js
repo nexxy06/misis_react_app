@@ -4,7 +4,7 @@ import './FeedbackForm.css';
 const FeedbackForm = () => {
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
+    habitat: '',
     phone: '',
     description: '',
     photo: null,
@@ -34,7 +34,7 @@ const FeedbackForm = () => {
 
     const data = new FormData();
     data.append('name', formData.name);
-    data.append('email', formData.email);
+    data.append('habitat', formData.habitat);
     data.append('phone', formData.phone);
     data.append('description', formData.description);
     data.append('photo', formData.photo);
@@ -92,9 +92,9 @@ const FeedbackForm = () => {
           <label>Место обитания: </label>
           <input
             type="text"
-            id="email"  
-            name="email"
-            value={formData.email}
+            id="habitat"  
+            name="habitat"
+            value={formData.habitat}
             onChange={handleChange}
             required
           />
