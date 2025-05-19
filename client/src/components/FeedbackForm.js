@@ -59,13 +59,25 @@ const FeedbackForm = () => {
   return (
     <section id="registration">
     <div>
-      <h2>Обратная связь</h2>
+      <h2>Добавить статью</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {message && <p style={{ color: 'green' }}>{message}</p>}
 
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Имя: </label>
+          <label>Ваша почта: </label>
+          <input
+            type="email"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div>
+          <label>Название/вид: </label>
           <input
             type="text"
             id="name"
@@ -77,10 +89,10 @@ const FeedbackForm = () => {
         </div>
 
         <div>
-          <label>Email: </label>
+          <label>Место обитания: </label>
           <input
-            type="email"
-            id="email"
+            type="text"
+            id="email"  
             name="email"
             value={formData.email}
             onChange={handleChange}
@@ -89,19 +101,7 @@ const FeedbackForm = () => {
         </div>
 
         <div>
-          <label>Телефон: </label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div>
-          <label>Фото лягушки: </label>
+          <label>Фото: </label>
           <input
             type="file"
             name="photo"
@@ -112,7 +112,7 @@ const FeedbackForm = () => {
         </div>
 
         <div>
-          <label>Подпись к фото: </label>
+          <label>Статья(.txt, .html): </label>
           <textarea
             name="description"
             value={formData.description}

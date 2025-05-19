@@ -27,13 +27,13 @@ function App() {
 function Header() {
   return (
     <header>
-      <h1>Фото лягушек</h1>
+      <h1>Froglib</h1>
       <nav>
         <ul>
           <li><Link to="/">О лягушках</Link></li>
-          <li><Link to="/frogs/:id">Фото</Link></li>
-          <li><Link to="/table">Таблица</Link></li>
-          <li><Link to="/registration">Обратная связь</Link></li>
+          {/* <li><Link to="/frogs/:id">Фото</Link></li> */}
+          <li><Link to="/table">Статьи</Link></li>
+          <li><Link to="/registration">Добавить статью</Link></li>
         </ul>
       </nav>
     </header>

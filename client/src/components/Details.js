@@ -31,7 +31,6 @@ const FrogDetail = () => {
   if (loading) return <div className="loading">Загрузка...</div>;
   if (error) return <div className="error">Ошибка: {error}</div>;
 
-  // Функция для безопасного отображения HTML
   const createMarkup = (html) => {
     return { __html: html };
   };

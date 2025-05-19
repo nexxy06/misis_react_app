@@ -32,7 +32,7 @@ const Table = () => {
 
   return (
     <div className="frog-gallery">
-      <h2>Список лягушек</h2>
+      <h2>Список статей</h2>
       <div className="frog-grid">
         {frogs.map(frog => (
           <div 
@@ -50,7 +50,7 @@ const Table = () => {
               }}
             />
             <h3>{frog.title}</h3>
-            <p>{frog.description}</p>
+            <p>{frog.email}</p>
           </div>
         ))}
       </div>
